@@ -4,6 +4,9 @@ namespace Modules\Quote\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use config;
+use Modules\Quote\Interfaces\QuoteRepositoryInterface;
+use Modules\Quote\Repositories\QuoteRepository;
 
 class QuoteServiceProvider extends ServiceProvider
 {
@@ -38,6 +41,8 @@ class QuoteServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->bind(QuoteRepostitoryInterface::class, QuoteRepository::class);
+
     }
 
     /**
