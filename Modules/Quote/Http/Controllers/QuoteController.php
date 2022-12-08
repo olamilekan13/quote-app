@@ -5,16 +5,30 @@ namespace Modules\Quote\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Quote\Interfaces\QuoteRepositoryInterface;
 
 class QuoteController extends Controller
 {
+
+    private QuoteRepositoryInterface $quoterepo ;
+
+    public function  _construct(QuoteRepositoryInterface $quoterepo){
+        $this-> quoterepo = $quoterepo;
+
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        return view('quote::index');
+        $quotes = $this->quoterepo->all();
+        return response()->json([
+            'data' => $quotes,
+            'status' => "success"
+
+        ]);
+        // return view('quote::index');
     }
 
     /**
