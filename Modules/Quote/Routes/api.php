@@ -17,4 +17,6 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::get('quotes',[QuoteController::class, 'index']);
+// Route::get('quotes',[QuoteController::class, 'index']);
+
+Route::get('quotes', 'QuoteController@index');

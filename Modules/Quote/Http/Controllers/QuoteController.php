@@ -10,10 +10,12 @@ use Modules\Quote\Interfaces\QuoteRepositoryInterface;
 class QuoteController extends Controller
 {
 
-    private QuoteRepositoryInterface $quoterepo ;
+    protected QuoteRepositoryInterface $quote;
 
-    public function  _construct(QuoteRepositoryInterface $quoterepo){
-        $this-> quoterepo = $quoterepo;
+    // private QuoteRepositoryInterface $quoterepo ;
+
+    public function  _construct(QuoteRepositoryInterface $quoteRepo){
+        $this-> quote = $quoteRepo;
 
     }
     /**
@@ -22,7 +24,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = $this->quoterepo->all();
+        $quotes = $this->quote->all();
         return response()->json([
             'data' => $quotes,
             'status' => "success"
@@ -37,7 +39,19 @@ class QuoteController extends Controller
      */
     public function create()
     {
-        return view('quote::create');
+
+         $quote = $this->quote->postQoute();
+        $quote->quote =$request->quote;
+        $quote->author=$request->author;
+        $quotes = $this->quote->create($quote);
+
+        return response()->json([
+            'data' => $quotes,
+            'status' => "success"
+
+        ]);
+        // $quote->save();
+        // return view('quote::create');
     }
 
     /**
